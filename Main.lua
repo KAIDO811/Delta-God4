@@ -132,7 +132,21 @@ createBtn("✈️ Fly (طيران)", Color3.fromRGB(100, 0, 150), function()
 end)
 
 createBtn("⚡ Speed 120", Color3.fromRGB(0, 150, 0), function() game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 120 end)
-createBtn("⚔️ Kill Aura", Color3.fromRGB(255, 0, 0), function() _G.A = not _G.A while _G.A do task.wait(0.1) game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,0)) end end)
+CreateBtn("⚔️ Kill Aura", Color3.fromRGB(255, 0, 0), function() 
+    _G.A = not _G.A 
+    while _G.A do 
+        task.wait(0.1) 
+        pcall(function()
+            for _, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                if v:FindFirstChild("HumanoidRootPart") and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude <= 20 then
+                    -- محاكاة الضرب باتجاه العدو
+                    game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,0))
+                    -- يمكنك إضافة سطر هنا لجعل الشخصية تنظر للعدو إذا أردت
+                end
+            end
+        end)
+    end 
+end)
 
 -- [ 3. قائمة الانتقال المستعادة ]
 local tpPanel = Instance.new("ScrollingFrame", frame)
